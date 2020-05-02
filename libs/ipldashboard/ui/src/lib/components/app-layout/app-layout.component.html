@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row class="fill-remaining-space">
+        <span>IPL Dashboard Application</span>
+        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="listTeams($event)">List the Teams</button>
+            <button mat-menu-item (click)="listPlayers($event)">
+        List the Players
+      </button>
+            <button mat-menu-item (click)="listPlayersByTeam($event)">
+        List the Players By Team
+      </button>
+        </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div class="main-content">
+    <router-outlet></router-outlet>
+</div>

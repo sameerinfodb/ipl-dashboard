@@ -1,7 +1,388 @@
 {
   "version": 1,
-  "projects": {},
+  "projects": {
+    "ipldashboard": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/ipldashboard",
+      "sourceRoot": "apps/ipldashboard/src",
+      "prefix": "ipl",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/ipldashboard",
+            "index": "apps/ipldashboard/src/index.html",
+            "main": "apps/ipldashboard/src/main.ts",
+            "polyfills": "apps/ipldashboard/src/polyfills.ts",
+            "tsConfig": "apps/ipldashboard/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/ipldashboard/src/favicon.ico",
+              "apps/ipldashboard/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "apps/ipldashboard/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/ipldashboard/src/environments/environment.ts",
+                  "with": "apps/ipldashboard/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ipldashboard:build",
+            "proxyConfig": "apps/ipldashboard/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ipldashboard:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ipldashboard:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/ipldashboard/tsconfig.app.json",
+              "apps/ipldashboard/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/ipldashboard/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/ipldashboard/jest.config.js",
+            "tsConfig": "apps/ipldashboard/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/ipldashboard/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "ipldashboard-e2e": {
+      "root": "apps/ipldashboard-e2e",
+      "sourceRoot": "apps/ipldashboard-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ipldashboard-e2e/cypress.json",
+            "tsConfig": "apps/ipldashboard-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ipldashboard:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ipldashboard:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/ipldashboard-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/ipldashboard-e2e/**"
+            ]
+          }
+        }
+      }
+    },
+    "ipldashboard-ipl": {
+      "projectType": "library",
+      "root": "libs/ipldashboard/ipl",
+      "sourceRoot": "libs/ipldashboard/ipl/src",
+      "prefix": "ipt",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ipldashboard/ipl/tsconfig.lib.json",
+              "libs/ipldashboard/ipl/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/ipldashboard/ipl/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ipldashboard/ipl/jest.config.js",
+            "tsConfig": "libs/ipldashboard/ipl/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ipldashboard/ipl/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "ipldashboard-ui": {
+      "projectType": "library",
+      "root": "libs/ipldashboard/ui",
+      "sourceRoot": "libs/ipldashboard/ui/src",
+      "prefix": "ipt",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ipldashboard/ui/tsconfig.lib.json",
+              "libs/ipldashboard/ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/ipldashboard/ui/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ipldashboard/ui/jest.config.js",
+            "tsConfig": "libs/ipldashboard/ui/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ipldashboard/ui/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "ipldashboard-core": {
+      "projectType": "library",
+      "root": "libs/ipldashboard/core",
+      "sourceRoot": "libs/ipldashboard/core/src",
+      "prefix": "ipt",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ipldashboard/core/tsconfig.lib.json",
+              "libs/ipldashboard/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/ipldashboard/core/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ipldashboard/core/jest.config.js",
+            "tsConfig": "libs/ipldashboard/core/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ipldashboard/core/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "api-services": {
+      "projectType": "library",
+      "root": "libs/api-services",
+      "sourceRoot": "libs/api-services/src",
+      "prefix": "ipt",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/api-services/tsconfig.lib.json",
+              "libs/api-services/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/api-services/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/api-services/jest.config.js",
+            "tsConfig": "libs/api-services/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/api-services/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "interfaces": {
+      "projectType": "library",
+      "root": "libs/interfaces",
+      "sourceRoot": "libs/interfaces/src",
+      "prefix": "ipt",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/interfaces/tsconfig.lib.json",
+              "libs/interfaces/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/interfaces/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/interfaces/jest.config.js",
+            "tsConfig": "libs/interfaces/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/interfaces/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "prefix": "api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": [
+              "apps/api/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/api/tsconfig.app.json",
+              "apps/api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/api/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "tsConfig": "apps/api/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "ipldashboard"
 }

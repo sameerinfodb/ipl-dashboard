@@ -15,7 +15,14 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ipl/ipldashboard/ipl": ["libs/ipldashboard/ipl/src/index.ts"],
+      "@ipl/ipldashboard/ui": ["libs/ipldashboard/ui/src/index.ts"],
+      "@ipl/ipldashboard/core": ["libs/ipldashboard/core/src/index.ts"],
+      "@ipl/api-services": ["libs/api-services/src/index.ts"],
+      "@ipl/interfaces": ["libs/interfaces/src/index.ts"],
+      "@ipldashboard/*": ["apps/api/src/app/*"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

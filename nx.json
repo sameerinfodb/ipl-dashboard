@@ -18,5 +18,31 @@
       }
     }
   },
-  "projects": {}
+  "projects": {
+    "ipldashboard": {
+      "tags": []
+    },
+    "ipldashboard-e2e": {
+      "tags": [],
+      "implicitDependencies": ["ipldashboard"]
+    },
+    "ipldashboard-ipl": {
+      "tags": []
+    },
+    "ipldashboard-ui": {
+      "tags": []
+    },
+    "ipldashboard-core": {
+      "tags": []
+    },
+    "api-services": {
+      "tags": []
+    },
+    "interfaces": {
+      "tags": []
+    },
+    "api": {
+      "tags": []
+    }
+  }
 }
