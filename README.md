@@ -1,4 +1,4 @@
-# Ipt
+# IPL
 
 This project was generated using [Nx](https://nx.dev).
 
