@@ -1,6 +1,6 @@
 import { Team } from '@ipl/interfaces';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
@@ -26,7 +26,7 @@ export class TeamService {
     const options = term ? { params: new HttpParams().set('term', term) } : {};
 
     const results = this.http.get<SearchTeamResults>(this.teamUrl, options);
-    console.log('service');
+
     const teams = results.pipe(
       map((searchResult: SearchTeamResults) => searchResult),
       catchError(this.handleError)
