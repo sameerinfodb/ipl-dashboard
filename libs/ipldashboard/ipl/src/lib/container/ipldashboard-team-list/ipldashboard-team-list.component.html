@@ -1,5 +1,11 @@
 <div class="container">
     <div class="results">
-        <!-- <ipt-team-grid [dataSource]="dataSource$ | async" (action)="doAction($event)"></ipt-team-grid> -->
+        <ipt-team-grid [dataSource]="dataSource$ | async" (action)="doAction($event)"></ipt-team-grid>
+    </div>
+
+    <div class="results">
+        <div *ngFor="let item of selectedTeamSource$ | async | keyvalue">
+            Key: <b>{{ item.key }}</b> and Value: <b>{{ item.value }}</b>
+        </div>
     </div>
 </div>

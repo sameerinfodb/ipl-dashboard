@@ -1,43 +1,47 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import {
   IPL_FEATURE_KEY,
-  State,
+  TeamState,
   IplPartialState,
   iplAdapter
 } from './ipl.reducer';
 
 // Lookup the 'Ipl' feature state managed by NgRx
-export const getIplState = createFeatureSelector<IplPartialState, State>(
+export const getTeamState = createFeatureSelector<IplPartialState, TeamState>(
   IPL_FEATURE_KEY
 );
 
 const { selectAll, selectEntities } = iplAdapter.getSelectors();
 
-export const getIplLoaded = createSelector(
-  getIplState,
-  (state: State) => state.loaded
+export const getTeamsLoaded = createSelector(
+  getTeamState,
+  (state: TeamState) => state.loaded
 );
 
 export const getIplError = createSelector(
-  getIplState,
-  (state: State) => state.error
+  getTeamState,
+  (state: TeamState) => state.error
 );
 
-export const getAllIpl = createSelector(getIplState, (state: State) =>
+export const getAllIplTeams = createSelector(getTeamState, (state: TeamState) =>
   selectAll(state)
 );
 
-export const getIplEntities = createSelector(getIplState, (state: State) =>
-  selectEntities(state)
+export const getSelectedIplTeam = createSelector(
+  getTeamState,
+  (state: TeamState) => selectEntities(state)
 );
 
-export const getSelectedId = createSelector(
-  getIplState,
-  (state: State) => state.selectedId
+export const getSelectedTeamId = createSelector(
+  getTeamState,
+  (state: TeamState) => state.selectedId
 );
 
 export const getSelected = createSelector(
-  getIplEntities,
-  getSelectedId,
-  (entities, selectedId) => selectedId && entities[selectedId]
+  getAllIplTeams,
+  getSelectedTeamId,
+  (entities, selectedId) => {
+    console.log('test');
+    return selectedId && entities[selectedId];
+  }
 );

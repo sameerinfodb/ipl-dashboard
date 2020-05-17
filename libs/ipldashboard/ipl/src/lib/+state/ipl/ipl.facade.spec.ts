@@ -1,32 +1,33 @@
 import { NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { readFirst } from '@nrwl/angular/testing';
-
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule, Store } from '@ngrx/store';
-
+import { Store, StoreModule } from '@ngrx/store';
 import { NxModule } from '@nrwl/angular';
-
-import { IplEntity } from './ipl.models';
+import { readFirst } from '@nrwl/angular/testing';
+import * as IplActions from './ipl.actions';
 import { IplEffects } from './ipl.effects';
 import { IplFacade } from './ipl.facade';
 
-import * as IplSelectors from './ipl.selectors';
-import * as IplActions from './ipl.actions';
-import { IPL_FEATURE_KEY, State, initialState, reducer } from './ipl.reducer';
+import { IPL_FEATURE_KEY, reducer, TeamState } from './ipl.reducer';
+import { Team } from '@ipl/interfaces';
 
 interface TestSchema {
-  ipl: State;
+  // #region Properties (1)
+
+  ipl: TeamState;
+
+  // #endregion Properties (1)
 }
 
 describe('IplFacade', () => {
   let facade: IplFacade;
   let store: Store<TestSchema>;
-  const createIplEntity = (id: string, name = '') =>
+  const createIplEntity = (id: string, name = '', shortCode = '') =>
     ({
       id,
-      name: name || `name-${id}`
-    } as IplEntity);
+      name: name || `name-${id}`,
+      shortCode: shortCode
+    } as Team);
 
   beforeEach(() => {});
 
@@ -94,7 +95,11 @@ describe('IplFacade', () => {
 
         facade.dispatch(
           IplActions.loadIplSuccess({
-            ipl: [createIplEntity('AAA'), createIplEntity('BBB')]
+            teams: [
+              createIplEntity('1', 'Kolkata Knight Riders', 'KKR'),
+              createIplEntity('2', 'Chennai Super Kings', 'CSK'),
+              createIplEntity('3', 'Kings XI Punjab', 'KXIP')
+            ]
           })
         );
 

@@ -1,29 +1,30 @@
-import { IplEntity } from './ipl.models';
-import { State, iplAdapter, initialState } from './ipl.reducer';
+import { Team } from '@ipl/interfaces';
+import { initialState, iplAdapter } from './ipl.reducer';
 import * as IplSelectors from './ipl.selectors';
 
 describe('Ipl Selectors', () => {
   const ERROR_MSG = 'No Error Available';
   const getIplId = it => it['id'];
-  const createIplEntity = (id: string, name = '') =>
+  const createIplEntity = (id: string, name = '', shortCode = '') =>
     ({
       id,
-      name: name || `name-${id}`
-    } as IplEntity);
+      name: name || `name-${id}`,
+      shortCode: shortCode
+    } as Team);
 
   let state;
 
   beforeEach(() => {
     state = {
-      ipl: iplAdapter.addAll(
+      ipl: iplAdapter.setAll(
         [
-          createIplEntity('PRODUCT-AAA'),
-          createIplEntity('PRODUCT-BBB'),
-          createIplEntity('PRODUCT-CCC')
+          createIplEntity('1', 'Kolkata Knight Riders', 'KKR'),
+          createIplEntity('2', 'Chennai Super Kings', 'CSK'),
+          createIplEntity('3', 'Kings XI Punjab', 'KXIP')
         ],
         {
           ...initialState,
-          selectedId: 'PRODUCT-BBB',
+          selectedId: '1',
           error: ERROR_MSG,
           loaded: true
         }
@@ -33,7 +34,7 @@ describe('Ipl Selectors', () => {
 
   describe('Ipl Selectors', () => {
     it('getAllIpl() should return the list of Ipl', () => {
-      const results = IplSelectors.getAllIpl(state);
+      const results = IplSelectors.getAllIplTeams(state);
       const selId = getIplId(results[1]);
 
       expect(results.length).toBe(3);
@@ -44,11 +45,11 @@ describe('Ipl Selectors', () => {
       const result = IplSelectors.getSelected(state);
       const selId = getIplId(result);
 
-      expect(selId).toBe('PRODUCT-BBB');
+      expect(selId).toBe('1');
     });
 
     it("getIplLoaded() should return the current 'loaded' status", () => {
-      const result = IplSelectors.getIplLoaded(state);
+      const result = IplSelectors.getTeamsLoaded(state);
 
       expect(result).toBe(true);
     });

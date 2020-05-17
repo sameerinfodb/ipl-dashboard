@@ -26,7 +26,7 @@ describe('IplEffects', () => {
       ]
     });
 
-    effects = TestBed.get(IplEffects);
+    effects = TestBed.inject(IplEffects);
   });
 
   describe('loadIpl$', () => {
@@ -34,7 +34,7 @@ describe('IplEffects', () => {
       actions = hot('-a-|', { a: IplActions.loadIpl() });
 
       const expected = hot('-a-|', {
-        a: IplActions.loadIplSuccess({ ipl: [] })
+        a: IplActions.loadIplSuccess({ teams: [] })
       });
 
       expect(effects.loadIpl$).toBeObservable(expected);

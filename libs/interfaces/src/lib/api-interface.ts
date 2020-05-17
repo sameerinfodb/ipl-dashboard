@@ -3,7 +3,7 @@ export interface Message {
 }
 
 export interface Team {
-  id: number;
+  id: string;
   name: string;
   shortCode: string;
 }

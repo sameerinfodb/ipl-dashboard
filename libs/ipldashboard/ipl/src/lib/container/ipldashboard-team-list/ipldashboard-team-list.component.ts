@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Team } from '@ipl/interfaces';
 import { tap } from 'rxjs/operators';
 import { IplFacade } from '../../+state/ipl/ipl.facade';
+import { Dictionary } from '@ngrx/entity';
 
 @Component({
   selector: 'ipt-ipldashboard-team-list',
@@ -13,21 +14,25 @@ import { IplFacade } from '../../+state/ipl/ipl.facade';
 })
 export class IpldashboardTeamListComponent implements OnInit {
   public dataSource$: Observable<Team[]>;
+  public selectedTeamSource$: Observable<Dictionary<Team>>;
 
   constructor(private readonly iplFacade: IplFacade) {}
 
   ngOnInit(): void {
-    this.iplFacade.dispatch({ type: '[Ipl] Load IPL Teams' });
+    this.iplFacade.loadAllTeams();
 
     this.dataSource$ = this.iplFacade.allIpl$;
 
     this.dataSource$ = this.dataSource$.pipe(tap(data => console.log(data)));
-    this.dataSource$.subscribe();
   }
 
   public doAction({ type, payload }: IPLDashboardAction) {
     switch (type) {
-      case 'search':
+      case 'select IPL team':
+        console.log('select IPL team', payload);
+        this.iplFacade.selectTeamById(payload);
+        this.selectedTeamSource$ = this.iplFacade.selectedIpl$;
+        this.selectedTeamSource$.subscribe();
         break;
 
       default:
